@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ResolvedReflectiveFactory } from '@angular/core/src/di/reflective_provider';
+import { DetailsPage } from '../details/details';
 
 export interface Result {
   author: string;
@@ -42,9 +43,12 @@ export class HomePage {
   results: Result[];
   searchQuery: string = '';
   items: Result[];
+  pushPage: any;
+
 
   constructor(public navCtrl: NavController) {
     this.initializeItems([]);
+    this.pushPage = DetailsPage;
   }
 
   initializeItems(results: Result[]): void {
@@ -52,7 +56,7 @@ export class HomePage {
   }
 
   //Fonction de recherche
-  getItems(ev: any) {
+  getResults(ev: any) {
     // this.initializeItems();
     let val = ev.target.value;
     // if (val && val.trim() != '') {
