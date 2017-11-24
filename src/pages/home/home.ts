@@ -45,7 +45,6 @@ export class HomePage {
   items: Result[];
   pushPage: any;
 
-
   constructor(public navCtrl: NavController) {
     this.initializeItems([]);
     this.pushPage = DetailsPage;

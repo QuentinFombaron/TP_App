@@ -15,7 +15,7 @@
       No results
     </ion-item>
 
-    <button ion-item *ngFor="let result of results" [navPush]="pushPage">
+    <button ion-item *ngFor="let result of results" [navPush]="pushPage" [navParams]="{data_result: result}">
       <h1>{{result.title}}</h1>
       <p>{{result.author}}, {{result.date}}</p>
       <ion-thumbnail item-start>
