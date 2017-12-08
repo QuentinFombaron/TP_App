@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      <br>Welcome
+      Bienvenue !
     </ion-title>
   </ion-navbar>
   <ion-searchbar (ionInput)="getResults($event)"></ion-searchbar>
@@ -11,15 +11,17 @@
 
   <ion-list>
 
-    <ion-item *ngIf="!results.length">
-      No results
+    <ion-item *ngIf="!(results | async)?.length">
+      Pas de résultat
     </ion-item>
 
-    <button ion-item *ngFor="let result of results" [navPush]="pushPage" [navParams]="{data_result: result}">
+    <button ion-item *ngFor="let result of results | async" [navPush]="pushPage" [navParams]="{data_result: result}">
       <h1>{{result.title}}</h1>
-      <p>{{result.overview}}</p>
+      <p>{{result.release_date | date}}</p>
       <ion-thumbnail item-start>
-        <img [src]="'http://image.tmdb.org/t/p/w500' + result.poster_path">
+
+        <img [src]="'http://image.tmdb.org/t/p/w92' + result.poster_path">
+
       </ion-thumbnail>
     </button>
 

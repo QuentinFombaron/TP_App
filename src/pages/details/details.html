@@ -13,10 +13,14 @@
 </ion-header>
 
 <ion-content padding>
-  <img [src]="'http://image.tmdb.org/t/p/w500' + result.backdrop_path">
+  <ion-card *ngIf="result.backdrop_path">
+      <img [src]="'http://image.tmdb.org/t/p/w500' + result.backdrop_path">
+  </ion-card>
   <h1>{{result.title}}<br></h1>
-  Date de sortie : {{result.release_date}}<br><br>
-  {{result.overview}}<br><br>
+  Sorti le {{result.release_date | date:' dd MMMM yyyy'}}<br><br>
+   {{result.overview}}<br><br>
+   Vote : {{result.vote_average}} / 10<br>
+  <br>
 
   <i>(ID : {{result.id}})</i>
 </ion-content>
