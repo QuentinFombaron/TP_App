@@ -17,9 +17,9 @@
 
     <button ion-item *ngFor="let result of results" [navPush]="pushPage" [navParams]="{data_result: result}">
       <h1>{{result.title}}</h1>
-      <p>{{result.author}}, {{result.date}}</p>
+      <p>{{result.overview}}</p>
       <ion-thumbnail item-start>
-        <img src='{{result.image}}'>
+        <img [src]="'http://image.tmdb.org/t/p/w500' + result.poster_path">
       </ion-thumbnail>
     </button>
 

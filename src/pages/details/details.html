@@ -12,7 +12,11 @@
 
 </ion-header>
 
-
 <ion-content padding>
-  {{result.author}}, {{result.date}}
+  <img [src]="'http://image.tmdb.org/t/p/w500' + result.backdrop_path">
+  <h1>{{result.title}}<br></h1>
+  Date de sortie : {{result.release_date}}<br><br>
+  {{result.overview}}<br><br>
+
+  <i>(ID : {{result.id}})</i>
 </ion-content>
