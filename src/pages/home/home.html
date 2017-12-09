@@ -18,10 +18,11 @@
     <button ion-item *ngFor="let result of results | async" [navPush]="pushPage" [navParams]="{data_result: result}">
       <h1>{{result.title}}</h1>
       <p>{{result.release_date | date}}</p>
-      <ion-thumbnail item-start>
-
+      <ion-thumbnail item-start *ngIf="result.poster_path">
         <img [src]="'http://image.tmdb.org/t/p/w92' + result.poster_path">
-
+      </ion-thumbnail>
+      <ion-thumbnail item-start *ngIf="!result.poster_path">
+        <img src="https://cdn.pbrd.co/images/GXjnfnM.jpg">
       </ion-thumbnail>
     </button>
 
