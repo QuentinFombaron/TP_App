@@ -10,6 +10,7 @@ import { DetailsPage } from '../pages/details/details';
 
 import { HttpClientModule } from '@angular/common/http';
 import { LOCALE_ID } from '@angular/core';
+import { Shake } from '@ionic-native/shake';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { LOCALE_ID } from '@angular/core';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {provide: LOCALE_ID, useValue: "fr"}
+    {provide: LOCALE_ID, useValue: "fr"},
+    Shake
   ]
 })
 export class AppModule {}

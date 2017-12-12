@@ -3,6 +3,10 @@ import { DetailsPage } from '../details/details';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { API_Key } from '../../app/tmdb';
 import { Observable } from 'rxjs/Observable';
+import { AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
+import { Subscription } from 'rxjs/Subscription';
+import { Shake } from '@ionic-native/shake';
 
 export interface Result {
   title: string;
@@ -27,15 +31,19 @@ export interface Result {
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
 })
 
 export class HomePage {
   results: Observable<Result[]> = Observable.of([]);
   searchQuery: string = "";
   pushPage: any = DetailsPage;
+  shakeSubscription: Subscription;
 
-  constructor(private httpClt: HttpClient) { }
+  constructor(private httpClt: HttpClient,
+    public alertCtrl: AlertController,
+    public navCtrl: NavController,
+    public shake: Shake) { }
 
   //Fonction de recherche
   getResults(ev: any) {
@@ -52,6 +60,50 @@ export class HomePage {
     return this.httpClt.get<Result[]>("https://api.themoviedb.org/3/search/movie", {
       params: new HttpParams().set("api_key", API_Key).set("query", query).set("language", "fr")
     }).pluck("results");
+  }
+
+  private discoverMovies(): Observable<Result[]> {
+    return this.httpClt.get<Result[]>("https://api.themoviedb.org/3/discover/movie", {
+      params: new HttpParams()
+      .set("api_key", API_Key)
+      .set("language", "fr")
+      .set("primary_release_year", "2018")
+    }).pluck("results");
+  }
+
+  private showRandomMovieAlert (movies: Result[]): void {
+      const movie: Result = movies[Math.floor(Math.random() * movies.length)];
+
+      const confirm = this.alertCtrl.create({
+        title: movie.title,
+        message: movie.overview,
+        buttons: [
+          {
+            text: 'Annuler',
+            handler: () => {
+              console.log('Annuler est clické');
+            }
+          },
+          {
+            text: 'Détails',
+            handler: () => {
+              console.log('Détails est clické');
+              this.navCtrl.push(DetailsPage, {data_result: movie});
+            }
+          }
+        ]
+      });
+      confirm.present();
+  }
+
+  ionViewDidEnter() {
+    this.shakeSubscription = this.shake.startWatch()
+      .switchMap(() => this.discoverMovies())
+      .subscribe(movies => this.showRandomMovieAlert(movies));
+  }
+
+  ionViewWillLeave() {
+    this.shakeSubscription.unsubscribe();
   }
 
 }
