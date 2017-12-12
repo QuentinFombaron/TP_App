@@ -96,14 +96,14 @@ export class HomePage {
       confirm.present();
   }
 
-  ionViewDidEnter() {
-    this.shakeSubscription = this.shake.startWatch()
-      .switchMap(() => this.discoverMovies())
-      .subscribe(movies => this.showRandomMovieAlert(movies));
-  }
+  // ionViewDidEnter() {
+  //   this.shakeSubscription = this.shake.startWatch()
+  //     .switchMap(() => this.discoverMovies())
+  //     .subscribe(movies => this.showRandomMovieAlert(movies));
+  // }
 
-  ionViewWillLeave() {
-    this.shakeSubscription.unsubscribe();
-  }
+  // ionViewWillLeave() {
+  //   this.shakeSubscription.unsubscribe();
+  // }
 
 }
